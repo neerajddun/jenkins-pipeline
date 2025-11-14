@@ -1,53 +1,20 @@
 pipeline {
-
-    agent any 
-
-    stages {
-
-        stage ('Checkout') {
-
-            steps {
-
-            }
-        }
-
-        stage ('Docker Image') {
-            
-            steps {
-
-             script {
-
-                docker.build("dockerfile")
-             }
-            
-            }
-        }
-
-        stage ('Deploy') {
-
-            steps {
-
-                echo 'Hello India'
-            }
-        }
-    }
-
-    pipeline {
     agent any
 
     stages {
         stage('Checkout') {
             steps {
-                // Example SCM checkout step
-                checkout scm
+                // Use the Jenkins 'git' step to clone the repository
+                git url: 'https://github.com/neerajddun/jenkins-pipeline.git'
             }
         }
 
         stage('Docker Image') {
             steps {
                 script {
-                    // Replace "myimage" with your desired image name
-                    docker.build("mydockerimage")
+                    // Build a Docker image using the Dockerfile in the repository
+                    // You can replace 'mydockerimage' with any preferred image name
+                    docker.build('mydockerimage')
                 }
             }
         }
@@ -59,4 +26,3 @@ pipeline {
         }
     }
 }
-
